@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>REFLEX</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- MAIN MENU -->
+<div id="pgMain" class="pg pg-show">
+  <div class="bg-grid"></div>
+  <div class="menu-wrap">
+    <div class="brand">
+      <p class="brand-tag">MOUSE SKILL TESTER</p>
+      <h1 class="brand-name">REFLEX</h1>
+      <div class="brand-line"></div>
+    </div>
+
+    <div class="cards">
+      <button class="card" id="btnReact">
+        <div class="card-glow card-glow-green"></div>
+        <div class="card-left">
+          <div class="react-icon">
+            <div class="ri-outer"></div>
+            <div class="ri-inner"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">REACTION TEST</div>
+          <div class="card-desc">Screen turns red — wait. The moment it goes green, click as fast as you can. Tests pure reaction speed.</div>
+          <div class="card-best" id="mReactBest"></div>
+        </div>
+        <div class="card-arrow">›</div>
+      </button>
+
+      <button class="card card-b" id="btnAim">
+        <div class="card-glow card-glow-cyan"></div>
+        <div class="card-left">
+          <div class="aim-icon">
+            <span class="ai-dot ai1"></span>
+            <span class="ai-dot ai2"></span>
+            <span class="ai-dot ai3"></span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">AIM TRAINER</div>
+          <div class="card-desc">Targets appear across the screen. Move your cursor over them before they vanish. Starts easy — gets relentless.</div>
+          <div class="card-best card-best-b" id="mAimBest"></div>
+        </div>
+        <div class="card-arrow">›</div>
+      </button>
+    </div>
+
+    <div class="menu-footer">BY UMAR SOHAIL</div>
+  </div>
+</div>
+
+<!-- REACTION TEST -->
+<div id="pgReact" class="pg pg-hide">
+  <button class="back" id="rBack">← BACK</button>
+
+  <div id="rIdle" class="rs">
+    <div class="rx-title">REACTION TEST</div>
+    <div class="rx-desc">
+      The screen will turn <em class="red-w">RED</em> — hold steady.<br>
+      The instant it flips <em class="grn-w">GREEN</em>, click anywhere.<br>
+      Click early and it won't count.
+    </div>
+    <button class="pill green-pill" id="rBtnStart">START TEST</button>
+    <div class="rx-records" id="rRecords"></div>
+  </div>
+
+  <div id="rWait" class="rs rs-fill r-red" style="display:none">
+    <div class="r-orb">
+      <div class="r-ring"></div>
+      <div class="r-face red-face">WAIT...</div>
+    </div>
+    <p class="r-hint red-hint">Don't click yet</p>
+  </div>
+
+  <div id="rGo" class="rs rs-fill r-green" style="display:none">
+    <div class="r-orb">
+      <div class="r-ring green-ring"></div>
+      <div class="r-face green-face">CLICK!</div>
+    </div>
+    <p class="r-hint green-hint">NOW!</p>
+  </div>
+
+  <div id="rEarly" class="rs rs-fill r-early" style="display:none">
+    <div class="early-icon">⚡</div>
+    <div class="early-title">TOO EARLY</div>
+    <div class="early-sub">You clicked before it turned green.</div>
+    <button class="pill yellow-pill" id="rBtnEarlyRetry">TRY AGAIN</button>
+  </div>
+
+  <div id="rResult" class="rs" style="display:none">
+    <p class="rx-lbl">YOUR REACTION TIME</p>
+    <div class="rx-time" id="rTime">—</div>
+    <div class="rx-grade" id="rGrade"></div>
+    <div class="rx-stats" id="rStats"></div>
+    <div class="rx-btns">
+      <button class="pill green-pill" id="rBtnAgain">AGAIN</button>
+      <button class="pill ghost-pill" id="rBtnDone">DONE</button>
+    </div>
+  </div>
+</div>
+
+<!-- AIM TRAINER -->
+<div id="pgAim" class="pg pg-hide">
+  <button class="pause-btn" id="aPauseBtn" aria-label="Pause game">Ⅱ</button>
+  <canvas id="aimCv"></canvas>
+
+  <div id="aHud" class="hud" style="display:none">
+    <div class="hb">
+      <div class="hl">SCORE</div>
+      <div class="hv" id="aHScore">0</div>
+    </div>
+    <div class="hb hb-mid">
+      <div class="h-level" id="aHLevel">LEVEL 1</div>
+      <div class="h-lives" id="aHLives"></div>
+      <div class="h-streak" id="aHStreak"></div>
+    </div>
+    <div class="hb hb-r">
+      <div class="hl">AVG SPEED</div>
+      <div class="hv" id="aHAcc">—</div>
+    </div>
+  </div>
+
+  <div id="aOvStart" class="aov" style="display:none">
+    <div class="ov-chip">REFLEX MODE</div>
+    <div class="ov-title">AIM TRAINER</div>
+    <div class="ov-sub">
+      Targets appear at random positions across the screen.<br>
+      Move your cursor over each one to catch it before it expires.<br>
+      3 lives &nbsp;·&nbsp; speeds up every 10 hits.
+    </div>
+    <button class="pill cyan-pill" id="aBtnStart">START</button>
+  </div>
+
+  <div id="aOvPause" class="aov" style="display:none">
+    <div class="ov-chip">PAUSED</div>
+    <div class="ov-title">AIM TRAINER</div>
+    <div class="ov-sub">
+      Take a second.<br>
+      Resume when you're ready or head back to the menu.
+    </div>
+    <div class="ov-btns">
+      <button class="pill cyan-pill" id="aBtnResume">RESUME</button>
+      <button class="pill ghost-pill" id="aBtnPauseMenu">MENU</button>
+    </div>
+  </div>
+
+  <div id="aOvEnd" class="aov" style="display:none">
+    <div class="ov-chip">RUN COMPLETE</div>
+    <div class="ov-title">GAME OVER</div>
+    <div class="go-heroes">
+      <div class="go-hero">
+        <div class="goh-lbl">SCORE</div>
+        <div class="goh-val" id="aoScore">0</div>
+      </div>
+      <div class="go-hero">
+        <div class="goh-lbl">AVG SPEED</div>
+        <div class="goh-val" id="aoAcc">—</div>
+      </div>
+    </div>
+    <div class="go-rows">
+      <div class="go-row"><span>LEVEL REACHED</span><span id="aoLevel">1</span></div>
+      <div class="go-row"><span>TARGETS HIT</span><span id="aoHits">0</span></div>
+      <div class="go-row"><span>TARGETS MISSED</span><span id="aoMiss">0</span></div>
+      <div class="go-row accent"><span>AVG CAPTURE TIME</span><span id="aoCapt">—</span></div>
+      <div class="go-row"><span>BEST STREAK</span><span id="aoStreak">0×</span></div>
+      <div class="go-row"><span>PERSONAL BEST</span><span id="aoPB">—</span></div>
+    </div>
+    <div class="ov-btns">
+      <button class="pill cyan-pill" id="aBtnRetry">RETRY</button>
+      <button class="pill ghost-pill" id="aBtnMenu">MENU</button>
+    </div>
+  </div>
+</div>
+
+<div id="fl"></div>
+<script src="game.js"></script>
+</body>
+</html>
