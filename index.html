@@ -1,182 +1,234 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>REFLEX</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>MouseTracer — Mouse Skill Tester</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- MAIN MENU -->
-<div id="pgMain" class="pg pg-show">
+<!-- ════════════ HOME ════════════ -->
+<div id="pgHome" class="pg pg-show">
   <div class="bg-grid"></div>
-  <div class="menu-wrap">
-    <div class="brand">
-      <p class="brand-tag">MOUSE SKILL TESTER</p>
-      <h1 class="brand-name">REFLEX</h1>
-      <div class="brand-line"></div>
-    </div>
+  <div class="home-wrap">
 
-    <div class="cards">
-      <button class="card" id="btnReact">
-        <div class="card-glow card-glow-green"></div>
-        <div class="card-left">
-          <div class="react-icon">
-            <div class="ri-outer"></div>
-            <div class="ri-inner"></div>
+    <header class="home-hdr">
+      <p class="home-eyebrow">MOUSE SKILL TESTER</p>
+      <h1 class="home-title">MOUSE<span>TRACER</span></h1>
+      <div class="home-rule"></div>
+      <p class="home-sub">Test your reaction speed, cursor tracking, and click performance.</p>
+    </header>
+
+    <div class="mode-grid">
+
+      <button class="mcard mcard-react" id="btnReact">
+        <div class="mcard-top">
+          <span class="mcard-num">01</span>
+          <div class="mcard-icon">
+            <div class="ra-ring"></div>
+            <div class="ra-dot"></div>
           </div>
         </div>
-        <div class="card-body">
-          <div class="card-title">REACTION TEST</div>
-          <div class="card-desc">Screen turns red — wait. The moment it goes green, click as fast as you can. Tests pure reaction speed.</div>
-          <div class="card-best" id="mReactBest"></div>
-        </div>
-        <div class="card-arrow">›</div>
+        <div class="mcard-name">Reaction Test</div>
+        <div class="mcard-desc">Screen turns red — wait. The instant it flips green, click. Measures your pure reflex speed in milliseconds.</div>
+        <div class="mcard-best" id="hReactBest"></div>
+        <div class="mcard-cta">START TEST →</div>
       </button>
 
-      <button class="card card-b" id="btnAim">
-        <div class="card-glow card-glow-cyan"></div>
-        <div class="card-left">
-          <div class="aim-icon">
-            <span class="ai-dot ai1"></span>
-            <span class="ai-dot ai2"></span>
-            <span class="ai-dot ai3"></span>
+      <button class="mcard mcard-track" id="btnTrack">
+        <div class="mcard-top">
+          <span class="mcard-num">02</span>
+          <div class="mcard-icon">
+            <div class="ta-orbit"></div>
+            <div class="ta-target"></div>
+            <div class="ta-cursor"></div>
           </div>
         </div>
-        <div class="card-body">
-          <div class="card-title">AIM TRAINER</div>
-          <div class="card-desc">Targets appear across the screen. Move your cursor over them before they vanish. Starts easy — gets relentless.</div>
-          <div class="card-best card-best-b" id="mAimBest"></div>
-        </div>
-        <div class="card-arrow">›</div>
+        <div class="mcard-name">Mouse Tracking</div>
+        <div class="mcard-desc">A target moves continuously across the screen. Keep your cursor on it as long as possible. Tests control and precision.</div>
+        <div class="mcard-best" id="hTrackBest"></div>
+        <div class="mcard-cta">START TEST →</div>
       </button>
+
+      <button class="mcard mcard-cps" id="btnCPS">
+        <div class="mcard-top">
+          <span class="mcard-num">03</span>
+          <div class="mcard-icon cps-icon">
+            <div class="ca-bar cb1"></div>
+            <div class="ca-bar cb2"></div>
+            <div class="ca-bar cb3"></div>
+            <div class="ca-bar cb4"></div>
+          </div>
+        </div>
+        <div class="mcard-name">Mouse Click Speed</div>
+        <div class="mcard-desc">Click as fast as you can for 5 seconds. Measures your raw click speed and consistency.</div>
+        <div class="mcard-best" id="hCPSBest"></div>
+        <div class="mcard-cta">START TEST →</div>
+      </button>
+
     </div>
 
-    <div class="menu-footer">BY UMAR SOHAIL</div>
+    <footer class="home-footer">BY UMAR SOHAIL</footer>
   </div>
 </div>
 
-<!-- REACTION TEST -->
+<!-- ════════════ REACTION TEST ════════════ -->
 <div id="pgReact" class="pg pg-hide">
-  <button class="back" id="rBack">← BACK</button>
+  <button class="back-btn" id="rBack">← BACK</button>
 
-  <div id="rIdle" class="rs">
-    <div class="rx-title">REACTION TEST</div>
-    <div class="rx-desc">
-      The screen will turn <em class="red-w">RED</em> — hold steady.<br>
-      The instant it flips <em class="grn-w">GREEN</em>, click anywhere.<br>
-      Click early and it won't count.
-    </div>
-    <button class="pill green-pill" id="rBtnStart">START TEST</button>
-    <div class="rx-records" id="rRecords"></div>
+  <div id="rIdle" class="rscreen">
+    <div class="rx-title">Reaction Test</div>
+    <div class="rx-desc">Screen goes <em class="c-red">RED</em> — wait without clicking.<br>The instant it turns <em class="c-grn">GREEN</em> — click anywhere.<br><span class="rx-note">Click early and the attempt won't count.</span></div>
+    <button class="pill pill-green" id="rBtnStart">START TEST</button>
+    <div class="r-records" id="rRecords"></div>
   </div>
 
-  <div id="rWait" class="rs rs-fill r-red" style="display:none">
+  <div id="rWait" class="rscreen rfull" style="display:none">
+    <div class="r-bg-red"></div>
     <div class="r-orb">
       <div class="r-ring"></div>
-      <div class="r-face red-face">WAIT...</div>
+      <div class="r-face r-face-red">WAIT...</div>
     </div>
-    <p class="r-hint red-hint">Don't click yet</p>
+    <p class="r-hint r-hint-red">Don't click yet</p>
   </div>
 
-  <div id="rGo" class="rs rs-fill r-green" style="display:none">
+  <div id="rGo" class="rscreen rfull" style="display:none">
+    <div class="r-bg-green"></div>
     <div class="r-orb">
-      <div class="r-ring green-ring"></div>
-      <div class="r-face green-face">CLICK!</div>
+      <div class="r-ring r-ring-green"></div>
+      <div class="r-face r-face-green">CLICK!</div>
     </div>
-    <p class="r-hint green-hint">NOW!</p>
+    <p class="r-hint r-hint-green">NOW!</p>
   </div>
 
-  <div id="rEarly" class="rs rs-fill r-early" style="display:none">
+  <div id="rEarly" class="rscreen rfull" style="display:none;background:#13100a;cursor:default">
     <div class="early-icon">⚡</div>
     <div class="early-title">TOO EARLY</div>
     <div class="early-sub">You clicked before it turned green.</div>
-    <button class="pill yellow-pill" id="rBtnEarlyRetry">TRY AGAIN</button>
+    <button class="pill pill-yel" id="rBtnEarlyRetry">TRY AGAIN</button>
   </div>
 
-  <div id="rResult" class="rs" style="display:none">
-    <p class="rx-lbl">YOUR REACTION TIME</p>
-    <div class="rx-time" id="rTime">—</div>
-    <div class="rx-grade" id="rGrade"></div>
-    <div class="rx-stats" id="rStats"></div>
-    <div class="rx-btns">
-      <button class="pill green-pill" id="rBtnAgain">AGAIN</button>
-      <button class="pill ghost-pill" id="rBtnDone">DONE</button>
+  <div id="rResult" class="rscreen" style="display:none">
+    <p class="result-eyebrow">YOUR REACTION TIME</p>
+    <div class="result-big" id="rTime">—</div>
+    <div class="result-grade" id="rGrade"></div>
+    <div class="result-stats" id="rStats"></div>
+    <div class="result-btns">
+      <button class="pill pill-green" id="rBtnAgain">AGAIN</button>
+      <button class="pill pill-ghost" id="rBtnDone">DONE</button>
     </div>
   </div>
 </div>
 
-<!-- AIM TRAINER -->
-<div id="pgAim" class="pg pg-hide">
-  <button class="pause-btn" id="aPauseBtn" aria-label="Pause game">Ⅱ</button>
-  <canvas id="aimCv"></canvas>
+<!-- ════════════ MOUSE TRACKING ════════════ -->
+<div id="pgTrack" class="pg pg-hide">
+  <button class="back-btn" id="tBack">← BACK</button>
+  <canvas id="trackCv"></canvas>
 
-  <div id="aHud" class="hud" style="display:none">
-    <div class="hb">
-      <div class="hl">SCORE</div>
-      <div class="hv" id="aHScore">0</div>
+  <div id="tHud" class="game-hud" style="display:none">
+    <div class="hud-block">
+      <div class="hud-lbl">TIME</div>
+      <div class="hud-val" id="tHudTime">0.0s</div>
     </div>
-    <div class="hb hb-mid">
-      <div class="h-level" id="aHLevel">LEVEL 1</div>
-      <div class="h-lives" id="aHLives"></div>
-      <div class="h-streak" id="aHStreak"></div>
+    <div class="hud-block hud-center">
+      <div class="hud-tracking-bar">
+        <div class="hud-tracking-fill" id="tHudFill"></div>
+      </div>
+      <div class="hud-bar-lbl">HIT ACCURACY</div>
     </div>
-    <div class="hb hb-r">
-      <div class="hl">AVG SPEED</div>
-      <div class="hv" id="aHAcc">—</div>
+    <div class="hud-block hud-right">
+      <div class="hud-lbl">SCORE</div>
+      <div class="hud-val" id="tHudScore">0</div>
     </div>
   </div>
 
-  <div id="aOvStart" class="aov" style="display:none">
-    <div class="ov-chip">REFLEX MODE</div>
-    <div class="ov-title">AIM TRAINER</div>
-    <div class="ov-sub">
-      Targets appear at random positions across the screen.<br>
-      Move your cursor over each one to catch it before it expires.<br>
-      3 lives &nbsp;·&nbsp; speeds up every 10 hits.
-    </div>
-    <button class="pill cyan-pill" id="aBtnStart">START</button>
+  <div id="tOvStart" class="game-ov" style="display:none">
+    <div class="ov-chip">MODE 02</div>
+    <div class="ov-title">Mouse Tracking</div>
+    <div class="ov-sub">A target moves across the screen.<br>Keep your cursor inside it as long as possible.<br>Speed increases every 8 seconds.</div>
+    <button class="pill pill-cyan" id="tBtnStart">START</button>
   </div>
 
-  <div id="aOvPause" class="aov" style="display:none">
-    <div class="ov-chip">PAUSED</div>
-    <div class="ov-title">AIM TRAINER</div>
-    <div class="ov-sub">
-      Take a second.<br>
-      Resume when you're ready or head back to the menu.
+  <div id="tOvEnd" class="game-ov" style="display:none">
+    <div class="ov-chip">SESSION COMPLETE</div>
+    <div class="ov-title">Results</div>
+    <div class="result-grid">
+      <div class="rg-hero"><div class="rg-lbl">TRACKING</div><div class="rg-val" id="tRTracking">—</div></div>
+      <div class="rg-hero"><div class="rg-lbl">ON TARGET</div><div class="rg-val" id="tRTime">—</div></div>
+    </div>
+    <div class="result-rows">
+      <div class="rrow"><span>SCORE</span><span id="tRScore">0</span></div>
+      <div class="rrow hi"><span>LEVEL REACHED</span><span id="tRLevel">1</span></div>
+      <div class="rrow"><span>PERSONAL BEST</span><span id="tRBest">—</span></div>
     </div>
     <div class="ov-btns">
-      <button class="pill cyan-pill" id="aBtnResume">RESUME</button>
-      <button class="pill ghost-pill" id="aBtnPauseMenu">MENU</button>
+      <button class="pill pill-cyan" id="tBtnRetry">RETRY</button>
+      <button class="pill pill-ghost" id="tBtnMenu">MENU</button>
     </div>
   </div>
+</div>
 
-  <div id="aOvEnd" class="aov" style="display:none">
-    <div class="ov-chip">RUN COMPLETE</div>
-    <div class="ov-title">GAME OVER</div>
-    <div class="go-heroes">
-      <div class="go-hero">
-        <div class="goh-lbl">SCORE</div>
-        <div class="goh-val" id="aoScore">0</div>
+<!-- ════════════ CLICK SPEED TEST ════════════ -->
+<div id="pgCPS" class="pg pg-hide">
+  <button class="back-btn" id="cBack">← BACK</button>
+
+  <div id="cOvStart" class="game-ov" style="display:none">
+    <div class="ov-chip">MODE 03</div>
+    <div class="ov-title">Mouse Click Speed</div>
+    <div class="ov-sub">Click as fast as you can for 5 seconds.<br>Measures your clicks per second and total clicks.</div>
+    <button class="pill pill-green" id="cBtnStart">START TEST</button>
+  </div>
+
+  <!-- Live game — shown during countdown AND during test -->
+  <div id="cGame" class="cps-game" style="display:none">
+
+    <div class="cps-top-bar">
+      <div class="cps-live-stat">
+        <div class="cps-live-lbl">CLICKS PER SECOND</div>
+        <div class="cps-live-val" id="cCPS">0.0</div>
       </div>
-      <div class="go-hero">
-        <div class="goh-lbl">AVG SPEED</div>
-        <div class="goh-val" id="aoAcc">—</div>
+      <div class="cps-timer-ring">
+        <svg viewBox="0 0 120 120" class="cps-ring-svg">
+          <circle cx="60" cy="60" r="52" class="cps-ring-bg"/>
+          <circle cx="60" cy="60" r="52" class="cps-ring-fill" id="cRingFill"/>
+        </svg>
+        <div class="cps-timer-inner">
+          <div class="cps-time-val" id="cTimeVal">5</div>
+          <div class="cps-time-lbl">sec</div>
+        </div>
+      </div>
+      <div class="cps-live-stat" style="text-align:right">
+        <div class="cps-live-lbl">TOTAL CLICKS</div>
+        <div class="cps-live-val" id="cClicks">0</div>
       </div>
     </div>
-    <div class="go-rows">
-      <div class="go-row"><span>LEVEL REACHED</span><span id="aoLevel">1</span></div>
-      <div class="go-row"><span>TARGETS HIT</span><span id="aoHits">0</span></div>
-      <div class="go-row"><span>TARGETS MISSED</span><span id="aoMiss">0</span></div>
-      <div class="go-row accent"><span>AVG CAPTURE TIME</span><span id="aoCapt">—</span></div>
-      <div class="go-row"><span>BEST STREAK</span><span id="aoStreak">0×</span></div>
-      <div class="go-row"><span>PERSONAL BEST</span><span id="aoPB">—</span></div>
+    <button class="cps-click-zone" id="cClickZone">
+      <div id="cCountBadge" class="cps-count-badge" style="display:none">
+        <div class="cps-count-num" id="cCountNum">3</div>
+        <div class="cps-count-lbl">GET READY — hover here</div>
+      </div>
+      <span class="cps-click-text">CLICK HERE</span>
+      <span class="cps-click-sub">as fast as you can</span>
+    </button>
+  </div>
+
+  <div id="cOvEnd" class="game-ov" style="display:none">
+    <div class="ov-chip">TEST COMPLETE</div>
+    <div class="ov-title">Results</div>
+    <div class="result-grid">
+      <div class="rg-hero"><div class="rg-lbl">CLICKS / SEC</div><div class="rg-val" id="cRCPS">—</div></div>
+      <div class="rg-hero"><div class="rg-lbl">TOTAL CLICKS</div><div class="rg-val" id="cRClicks">—</div></div>
     </div>
+    <div class="result-rows">
+      <div class="rrow hi"><span>PEAK CPS</span><span id="cRPeak">—</span></div>
+      <div class="rrow"><span>PERSONAL BEST</span><span id="cRBest">—</span></div>
+    </div>
+    <div class="result-grade" id="cGrade"></div>
     <div class="ov-btns">
-      <button class="pill cyan-pill" id="aBtnRetry">RETRY</button>
-      <button class="pill ghost-pill" id="aBtnMenu">MENU</button>
+      <button class="pill pill-green" id="cBtnRetry">RETRY</button>
+      <button class="pill pill-ghost" id="cBtnMenu">MENU</button>
     </div>
   </div>
 </div>
