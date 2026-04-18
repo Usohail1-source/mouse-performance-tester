@@ -781,13 +781,11 @@ syncHome();
 (function(){
   const isMobile =
     /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
-    ('ontouchstart' in window && navigator.maxTouchPoints > 1 && window.innerWidth < 1024);
+    (navigator.maxTouchPoints > 1 && window.innerWidth < 1024);
   if(isMobile){
     const block = document.getElementById('mobileBlock');
-    if(block){
-      block.style.display = 'flex';
-      // Hide everything else
-      document.getElementById('pgHome').style.visibility = 'hidden';
-    }
+    if(block) block.style.display = 'flex';
+    // Hide all game pages so nothing shows behind it
+    document.querySelectorAll('.pg').forEach(p => p.style.display = 'none');
   }
 })();
